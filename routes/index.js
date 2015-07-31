@@ -4,6 +4,8 @@ var router = express.Router();
 var quizController = require('../controllers/quiz_controller');
 var authorController = require('../controllers/author_controller');
 
+router.param('quizId', quizController.load);
+
 /* GET home page. */
 router.get('/', function(req, res) {
   res.render('index', { title: 'Bienvenido a Quiz', subTitle: 'El portal donde podra crear sus propios juegos!' });
