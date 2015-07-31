@@ -2,19 +2,27 @@
 
 var models = require('../models/models.js');
 
-exports.question = function(req, res, err) {
+exports.index = function(req, res, err) {
     models.Quiz.findAll()
         .success(function(quizes) {
-            res.render('quizes/question', {pregunta: quizes[0].pregunta});
+            res.render('quizes/index', {quizes: quizes});
+        })
+    ;
+};
+
+exports.show = function(req, res, err) {
+    models.Quiz.find(req.params.quizId)
+        .success(function(quiz) {
+            res.render('quizes/show', {quiz: quiz});
         })
     ;
 };
 
 exports.answer = function(req, res, err) {
-    models.Quiz.findAll()
-        .success(function(quizes) {
-            var message = (req.query.respuesta === quizes[0].respuesta) ? 'Correcto' : 'Incorrecto';
-            res.render('quizes/answer', {respuesta: message});
+    models.Quiz.find(req.params.quizId)
+        .success(function(quiz) {
+            var message = (req.query.respuesta === quiz.respuesta) ? 'Correcto' : 'Incorrecto';
+            res.render('quizes/answer', {respuesta: message, quiz: quiz});
         })
     ;
 };
