@@ -35,6 +35,10 @@ sequelize.sync().success(function() {
                 .success(function(quiz) {
                     console.log(quiz);
                     console.log('BD inicializada');
+                    return Quiz.create({
+                        pregunta: 'Capital de Francia',
+                        respuesta: 'Paris'
+                    })
                 })
             ;
         }
