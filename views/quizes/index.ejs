@@ -1,4 +1,4 @@
-    <table>
+    <table style="width:100%;">
     <% for (var i=0; i< quizes.length; i++) { %>
     	<tr>
     	    <td>
@@ -9,6 +9,10 @@
         <tr/>
     <%  }   %>
     </table>
+    <br>
+    <a href="/quizes/new"><button type="button">Crear pregunta</button></a>
+    <br>
+    <br>
     <hr>
     <h3> Filtre las preguntas </h3>
     <form method='GET' action='/quizes'>
