@@ -92,3 +92,14 @@ exports.edit = function(req, res, next) {
     var quiz = req.quiz;
     res.render('quizes/edit', {quiz: quiz, errors: []});
 };
+
+exports.destroy = function(req, res, next) {
+    req.quiz.destroy()
+        .then(function(){
+            res.redirect('/quizes');
+        })
+        .catch(function(err) {
+            next(err);
+        })
+    ;
+};
