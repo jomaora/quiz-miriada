@@ -40,16 +40,21 @@ exports.answer = function(req, res, next) {
 
 exports.create = function(req, res, next) {
     var quiz = models.Quiz.build(req.body.quiz);
+    console.log(quiz);
     quiz.validate()
         .then(function(err) {
             if (err) {
+                console.log(err);
                 res.render('/quizes/new', {quiz: quiz, errors: err.errors});
             }
-            quiz.save({fields: ["pregunta", "respuesta"]})
-                .then(function(){
-                    res.redirect('/quizes');
-                })
-            ;
+            else {
+                quiz
+                    .save({fields: ["pregunta", "respuesta"]})
+                    .then(function(){
+                        res.redirect('/quizes');
+                    })
+                ;    
+            }
         })
     ;
 };
