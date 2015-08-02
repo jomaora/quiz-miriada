@@ -1,5 +1,5 @@
 'use strict'
-
+var _ = require('lodash');
 var models = require('../models/models.js');
 
 exports.load = function(req, res, next, quizId) {
@@ -40,7 +40,6 @@ exports.answer = function(req, res, next) {
 
 exports.create = function(req, res, next) {
     var quiz = models.Quiz.build(req.body.quiz);
-    console.log(quiz);
     quiz.validate()
         .then(function(err) {
             if (err) {
@@ -49,7 +48,7 @@ exports.create = function(req, res, next) {
             }
             else {
                 quiz
-                    .save({fields: ["pregunta", "respuesta"]})
+                    .save({fields: ["pregunta", "respuesta", "tema"]})
                     .then(function(){
                         res.redirect('/quizes');
                     })
@@ -62,14 +61,14 @@ exports.create = function(req, res, next) {
 exports.new = function(req, res, next) {
     var quiz = models.Quiz.build({
         pregunta: "Pregunta",
-        respuesta: "Respuesta"
+        respuesta: "Respuesta",
+        tema: 'otro'
     });
     res.render('quizes/new', {quiz: quiz, errors: []});
 };
 
 exports.update = function(req, res, next) {
-    req.quiz.pregunta = req.body.quiz.pregunta;
-    req.quiz.respuesta = req.body.quiz.respuesta;
+    req.quiz = _.merge(req.quiz, _.pick(req.body.quiz, ['pregunta', 'respuesta', 'tema']));
     req.quiz.validate()
         .then(function(err) {
             if (err) {
@@ -78,7 +77,7 @@ exports.update = function(req, res, next) {
             }
             else {
                 req.quiz
-                    .save({fields: ["pregunta", "respuesta"]})
+                    .save({fields: ["pregunta", "respuesta", "tema"]})
                     .then(function(){
                         res.redirect('/quizes');
                     })
