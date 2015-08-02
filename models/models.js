@@ -25,7 +25,8 @@ var sequelize = new Sequelize(DB_name, user, pwd,
 var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
 exports.Quiz = Quiz;
 
-sequelize.sync().success(function() {
+sequelize.sync()
+.then(function() {
     Quiz.count().success(function(count) {
         if (count === 0) {
             Quiz.create({
