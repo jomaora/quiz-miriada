@@ -3,8 +3,9 @@ var _ = require('lodash');
 var models = require('../models/models.js');
 
 exports.load = function(req, res, next, quizId) {
+    console.log('quizId to load', quizId);
     models.Quiz.find({
-            id: Number(quizId),
+            where: { id: Number(quizId) },
             include: [{model: models.Comment}]
         })
         .then(function(quiz) {
