@@ -34,6 +34,7 @@ exports.destroy = function(req, res) {
 };
 
 exports.loginRequired = function(req, res, next) {
+	console.log('user', req.session.user);
     if (req.session.user) {
         next();
     }
