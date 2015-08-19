@@ -5,6 +5,7 @@ var quizController = require('../controllers/quiz_controller');
 var authorController = require('../controllers/author_controller');
 var commentController = require('../controllers/comment_controller');
 var sessionController = require('../controllers/session_controller');
+var statisticsController = require('../controllers/statistics_controller');
 
 router.param('quizId', quizController.load);
 router.param('commentId', commentController.load);
@@ -32,5 +33,7 @@ router.post('/quizes/:quizId(\\d+)/comments', commentController.create);
 router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish', sessionController.loginRequired, commentController.publish);
 
 router.get('/author', authorController.author);
+
+router.get('/quizes/statistics', statisticsController.show);
 
 module.exports = router;
