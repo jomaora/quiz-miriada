@@ -25,6 +25,27 @@ app.use(session());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(function (req, res, next) {
+  console.log('Time: %d', req.session.lastRequestTime, req.session.user);
+  if (req.session.user) {
+    if (req.session.lastRequestTime) {
+        var difference = (Date.now() - Number(req.session.lastRequestTime));
+        var seconds = Math.round(difference/1000);
+        console.log('Time difference: %d', seconds);
+        if (seconds >= 120) {
+            req.session.lastRequestTime = null;
+            res.redirect('/logout');
+            return;
+        }
+    }
+    req.session.lastRequestTime = Date.now();
+    next();
+  }
+  else {
+    next();
+  }
+});
+
 app.use(function(req, res, next) {
     if (!req.path.match(/\/login|\/logout/)) {
         req.session.redir = req.path;
