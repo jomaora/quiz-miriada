@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "./node_modules/mocha/bin/mocha test"
   },
   "dependencies": {
     "bluebird": "^2.9.34",
@@ -23,6 +24,9 @@
     "serve-favicon": "~2.1.3"
   },
   "devDependencies": {
-    "sqlite3": "^3.0.4"
+    "chai": "^3.3.0",
+    "mocha": "^2.3.3",
+    "sqlite3": "^3.0.4",
+    "supertest": "^1.1.0"
   }
 }
