@@ -1,15 +1,15 @@
 var path = require('path');
 var Sequelize = require('sequelize');
 
-var url = process.env.DATABASE_URL.match(/(.*)\:\/\/(.*?)\:(.*)@(.*)\:(.*)\/(.*)/);
-var DB_name     = (url[6] || null);
-var user        = (url[2] || null);
-var pwd         = (url[3] || null);
-var protocol    = (url[1] || null);
-var dialect     = (url[1] || null);
-var port        = (url[5] || null);
-var host        = (url[4] || null);
-var storage     = process.env.DATABASE_STORAGE;
+var url = (process.env.DATABASE_URL || '').match(/(.*)\:\/\/(.*?)\:(.*)@(.*)\:(.*)\/(.*)/);
+var DB_name     = url ? url[6] : null;
+var user        = url ? url[2] : null;
+var pwd         = url ? url[3] : null;
+var protocol    = url ? url[1] : null;
+var dialect     = url ? url[1] : 'sqlite';
+var port        = url ? url[5] : null;
+var host        = url ? url[4] : null;
+var storage     = process.env.DATABASE_STORAGE || 'database.sqlite';
 
 var sequelize = new Sequelize(DB_name, user, pwd,
     {
